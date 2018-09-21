@@ -85,6 +85,6 @@
 	}
 }
 
-.parallax {
+.parallax>.carousel-item {
 	background-attachment: fixed;
 }
