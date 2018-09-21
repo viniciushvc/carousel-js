@@ -1,0 +1,32 @@
+{
+  "name": "carousel",
+  "version": "1.0.0",
+  "description": "carousel vanilla js",
+  "main": "index.js",
+  "scripts": {
+		"build": "gulp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/viniciushvc/carousel-js.git"
+  },
+  "keywords": [
+    "carousel",
+    "vanilla",
+    "javascript",
+    "js",
+    "pure"
+  ],
+  "author": "Vinicius Vicentini",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/viniciushvc/carousel-js/issues"
+  },
+  "homepage": "https://github.com/viniciushvc/carousel-js#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-uglify": "^2.0.0",
+    "gulp-autoprefixer": "latest",
+    "gulp-csso": "^2.0.0"
+  }
+}
