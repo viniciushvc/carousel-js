@@ -1,40 +1,119 @@
-var slideIndex = 1;
+(function Carousel() {
 
-var indicators = document.getElementsByClassName('carousel-indicators-item');
+	var i;
 
-var slides = document.getElementsByClassName('carousel-item');
+	var indicators = document.getElementsByClassName('carousel-indicators-item');
 
-for (var i = 0; i < indicators.length; i++) {
-	indicators[i].onclick = function () {
-		showSlides(slideIndex = i + 1);
+	var slides = document.getElementsByClassName('carousel-item');
+
+	var time = document.querySelector('.carousel').dataset.time;
+
+	var position = findActive();
+
+	/**
+	 * Add click event each indicator
+	 */
+	for (i = 0; i < indicators.length; i++) {
+		indicators[i].onclick = function () {
+			position++;
+			changeSlide();
+		};
+	}
+
+	/**
+	 * Previous slide
+	 */
+	document.querySelector('.carousel-prev').onclick = function () {
+		position--;
+
+		changeSlide();
 	};
-}
 
-document.querySelector('.carousel-prev').onclick = function () {
-	showSlides(slideIndex -= 1);
-};
+	/**
+	 * Next slide
+	 */
+	document.querySelector('.carousel-next').onclick = function () {
+		position++;
 
-document.querySelector('.carousel-next').onclick = function () {
-	showSlides(slideIndex += 1);
-};
+		changeSlide();
+	};
 
-function showSlides(n) {
+	/**
+	 * Carousel function
+	 */
+	function changeSlide() {
 
-	if (n > slides.length)
-		slideIndex = 1;
+		if (position > slides.length)
+			position = 1;
 
-	if (n < 1)
-		slideIndex = slides.length;
+		if (position < 1)
+			position = slides.length;
 
-	for (var i = 0; i < slides.length; i++)
-		slides[i].classList.remove('active');
+		hideSlides();
 
-	for (i = 0; i < indicators.length; i++)
-		indicators[i].className = indicators[i].className.replace(' active', '');
+		activeSlide();
+	}
 
-	slides[slideIndex - 1].classList.add('active');
+	/**
+	 * Mouse over stop slideshow
+	 */
+	document.querySelector('.carousel').onmouseover = function () {
+		window.clearTimeout(timer);
+	};
 
-	indicators[slideIndex - 1].className += ' active';
-}
+	/**
+	 * Mouse out start slideshow
+	 */
+	document.querySelector('.carousel').onmouseout = function () {
+		timer = window.setTimeout(autoSlide, time);
+	};
 
-showSlides(slideIndex);
+	/**
+	 * Automatic slide
+	 */
+	var timer;
+	function autoSlide() {
+		if (time) {
+			position++;
+
+			changeSlide();
+
+			timer = window.setTimeout(autoSlide, time);
+		}
+	}
+
+	/**
+	 * Hide slides
+	 */
+	function hideSlides() {
+		for (i = 0; i < slides.length; i++)
+			slides[i].classList.remove('active');
+
+		for (i = 0; i < indicators.length; i++)
+			indicators[i].className = indicators[i].className.replace(' active', '');
+	}
+
+	/**
+	 * Active slide
+	 */
+	function activeSlide() {
+		if (slides.length)
+			slides[position - 1].classList.add('active');
+
+		if (indicators.length)
+			indicators[position - 1].className += ' active';
+	}
+
+	/**
+	 * Find current active slide 
+	 */
+	function findActive() {
+		for (i = 0; i < slides.length; i++) {
+			if (slides[i].classList.contains('active'))
+				return i + 1;
+		}
+	}
+
+	autoSlide();
+
+})();
